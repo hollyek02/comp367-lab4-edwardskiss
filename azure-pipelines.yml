@@ -1,0 +1,20 @@
+trigger:
+  - main
+
+pool:
+  name: Default  
+
+steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '8.x'
+
+  - script: dotnet restore
+    displayName: 'Restore'
+
+  - script: dotnet build StringLibrary/StringLibrary.csproj -c Release
+    displayName: 'Build StringLibrary'
+
+  - script: dotnet pack StringLibrary/StringLibrary.csproj -c Release -o $(Build.ArtifactStagingDirectory)
+    displayName: 'Pack StringLibrary'
