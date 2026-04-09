@@ -2,7 +2,7 @@ trigger:
   - main
 
 pool:
-  name: Default  
+  name: Default   
 
 steps:
   - task: UseDotNet@2
@@ -10,11 +10,14 @@ steps:
       packageType: 'sdk'
       version: '8.x'
 
-  - script: dotnet restore
+  - script: dotnet restore Lab4.slnx
+    workingDirectory: $(Build.SourcesDirectory)
     displayName: 'Restore'
 
   - script: dotnet build StringLibrary/StringLibrary.csproj -c Release
+    workingDirectory: $(Build.SourcesDirectory)
     displayName: 'Build StringLibrary'
 
   - script: dotnet pack StringLibrary/StringLibrary.csproj -c Release -o $(Build.ArtifactStagingDirectory)
+    workingDirectory: $(Build.SourcesDirectory)
     displayName: 'Pack StringLibrary'
