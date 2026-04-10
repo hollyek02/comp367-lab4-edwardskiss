@@ -26,9 +26,13 @@ steps:
     workingDirectory: $(Build.SourcesDirectory)
     displayName: 'Pack StringLibrary'
 
-  - script: >
-      dotnet nuget push "$(Build.ArtifactStagingDirectory)\*.nupkg"
-      --source "StringLibraryFeed"
-      --api-key az
-    workingDirectory: $(Build.SourcesDirectory)
+  - task: NuGetAuthenticate@1
+    displayName: 'Authenticate with Azure Artifacts'
+
+  - task: NuGetCommand@2
     displayName: 'Push package to Azure Artifacts feed'
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: 'StringLibraryArtifacts/StringLibraryFeed'
