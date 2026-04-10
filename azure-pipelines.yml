@@ -30,9 +30,11 @@ steps:
     displayName: 'Authenticate with Azure Artifacts'
 
   - task: NuGetCommand@2
-    displayName: 'Push package to Azure Artifacts feed'
     inputs:
       command: 'push'
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
       nuGetFeedType: 'internal'
-      publishVstsFeed: 'StringLibraryArtifacts/StringLibraryFeed'
+      publishVstsFeed: 'd923df66-bec9-4a67-97af-001198209c3b/d41fa06e-361a-4a52-9bf1-fe0abc7e749b'
+
+
+ 
